@@ -1,0 +1,50 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+version = "${mod_version}"
+group = "${mod_group_id}"
+archivesBaseName = "${mod_name}"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: "${minecraft_version}"
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                voidera {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+            mods {
+                voidera {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fg.deobf("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title': project.mod_id,
+            'Specification-Version': project.version,
+            'Implementation-Title': project.mod_id,
+            'Implementation-Version': project.version,
+            'Specification-Vendor': 'VoidEra',
+            'Implementation-Vendor': 'VoidEra'
+        ])
+    }
+}
